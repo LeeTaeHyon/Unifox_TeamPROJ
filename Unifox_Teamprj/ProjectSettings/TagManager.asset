@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Map
+  - Reset
+  - Obstacle
+  - OBReset
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -13,9 +18,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Reset
+  - Player
+  - Ground
   - 
   - 
   - 
@@ -40,4 +45,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2071661005
+    locked: 0
+  - name: Forground
+    uniqueID: 2914907017
+    locked: 0
+  - name: obstacle
+    uniqueID: 264683925
+    locked: 0
+  - name: Intractable
+    uniqueID: 3689590817
+    locked: 0
+  - name: UI
+    uniqueID: 3297129789
     locked: 0

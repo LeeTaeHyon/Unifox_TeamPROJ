@@ -4,58 +4,49 @@ using UnityEngine;
 
 public class MovePlayer : MonoBehaviour
 {
+    private Rigidbody2D myRigidbody;
 
-    public float speed;
+    private bool slide;
 
-    private Vector3 vector;
+    private Animator myAnimator;
 
-    public int walkCount;
-    private int currentWalkCount;
-
-    private bool canMove = true;
-    // Start is called before the first frame update
     void Start()
     {
-
+        myRigidbody = GetComponent<Rigidbody2D>();   
     }
 
-    IEnumerator MoveCoroutine()
+    void FixedUpdate()
     {
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-        {
-            vector.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
+        float horizontal = Input.GetAxis("Horizontal");
 
-            while (currentWalkCount < walkCount)
-            {
-                if (vector.x != 0)
-                {
-                    transform.Translate(vector.x * speed, 0, 0);
-                }
-                else if (vector.y != 0)
-                {
-                    transform.Translate(0, vector.y * speed, 0);
-                }
-                currentWalkCount++;
+        HandleMovement(horizontal);
 
-            }
-            currentWalkCount = 0;
-            yield return new WaitForSeconds(0.1f);
+        ResetValues();
 
-        }
-        canMove = true;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void HandleMovement(float horizontal)
     {
-        if (canMove)
+        if(slide && !this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
         {
-            if(Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-            {
-                canMove = false;
-                StartCoroutine(MoveCoroutine());
-            }
+            myAnimator.SetBool("Slide", true);
         }
-        
+        else if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Slide"))
+        {
+            myAnimator.SetBool("Slide", false);
+        }
     }
+
+    private void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            slide = true;
+        }
+    }
+
+    private void ResetValues()
+    {
+        slide = false;
+    }
+
 }
